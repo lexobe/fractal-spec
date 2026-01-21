@@ -78,7 +78,8 @@ graph LR
 │   ├── fractal.spec.md
 │   ├── fractal.plan.md
 │   ├── fractal.do.md
-│   └── fractal.check.md
+│   ├── fractal.check.md
+│   └── fractal.refactor.md # [新增] Spec 重构与治理
 └── README.md               # 本文件
 ```
 
@@ -90,11 +91,12 @@ graph LR
 | `/plan` | 生成实施计划 | `git diff specs/` -> 分析影响 -> 写入 `tasks.md` |
 | `/do` | 执行代码实现 | 读取 `tasks.md` -> 修改代码 -> 运行测试 |
 | `/check` | 验证并提交 | 验证 `tasks.md` 完成度 -> 运行 Test/Lint -> `git commit` |
+| `/refactor <target>` | 治理 Spec 结构 | 读取 Spec -> 执行拆分/重命名/格式化 |
 
 ## 快速开始 (Quick Start)
 
 1.  **初始化**:
-    确保 `commands/` 目录下包含 4 个核心 Prompt 文件。
+    确保 `commands/` 目录下包含 5 个核心 Prompt 文件。
 
 2.  **创建第一个 Spec**:
     ```bash
@@ -127,4 +129,4 @@ graph LR
 1.  **Spec First**: 严禁跳过 `/spec` 直接写代码。Spec 是唯一的真理来源。
 2.  **原子化提交**: 建议在 `/spec` 完成后 Commit 一次，`/do` + `/check` 完成后 Commit 一次。这样 Git Log 清晰地记录了“需求变更”与“代码实现”的对应关系。
 3.  **信任 Diff**: `/plan` 的质量取决于 Spec 描述的精准度。如果 Spec 模糊，Plan 就会产生幻觉。
-4.  **分形拆分**: 当一个 Spec 变得太长，**立即**使用标准流程将其拆分为子文件。不要让单个文档成为维护瓶颈。
+4.  **分形拆分**: 当一个 Spec 变得太长，**立即**使用 `/refactor` 将其拆分为子文件。不要让单个文档成为维护瓶颈。
