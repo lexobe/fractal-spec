@@ -3,6 +3,8 @@
 ## User Input
 目标 Spec 文件路径（如果未指定，则默认为 `specs/` 目录下所有 `.md` 文件）。
 
+{{args}}
+
 You **MUST** provide a quantitative score and actionable improvements.
 
 ## Goal
@@ -18,11 +20,12 @@ You **MUST** provide a quantitative score and actionable improvements.
     - 缺失 6 段式任一章节 -> 扣 5 分/个。
     - 章节顺序错误 -> 扣 2 分。
 
-- **Atomicity (15分)**:
-    - 文件名违规（非单单词） -> 扣 15 分。
-    - 内容 > 300 行未拆分 -> 扣 10 分。
+- **Holonomy (20分)**: *[Self-Sufficiency & Naming]*
+    - **Hollow Node**: 父节点只包含链接，缺乏核心模型或不变式 -> 扣 15 分。
+    - **Fragmented Child**: 子节点内容过少，缺乏独立存在的必要性 -> 扣 10 分。
+    - **Naming Violation**: 文件名非单单词或层级命名错误 -> 扣 10 分。
 
-- **Clarity (20分)**:
+- **Clarity (15分)**:
     - 模糊词汇 ("TBD", "TODO", "Maybe") -> 扣 2 分/处。
     - 接口/数据结构无类型定义 -> 扣 3 分/处。
 
@@ -52,12 +55,12 @@ You **MUST** provide a quantitative score and actionable improvements.
 - 如果用户未指定，遍历 `specs/*.md`，生成汇总报告。
 
 ### 2. 深度分析 (Deep Analysis)
-- **Phase 1: Syntax (Structure, Atomicity, Clarity)**
-    - 正则扫描标题、文件名、关键词。
-- **Phase 2: Semantics (Consistency, Testability)**
-    - 理解 Scope 边界，检查 Interface 是否越界。
-    - 检查 Invariants 逻辑闭环。
-    - 确认 Verification 是否具备可操作性。
+- **Phase 1: Syntax (Structure, Clarity)**
+    - 正则扫描标题、关键词。
+- **Phase 2: Semantics (Holonomy, Consistency, Testability)**
+    - **Holonomy Check**: 检查内容密度。如果是父节点，是否定义了 Core Model？如果是子节点，是否太单薄？
+    - 检查命名约束。
+    - 理解 Scope 边界，检查 Invariants 逻辑闭环。
 - **Phase 3: Ecosystem (Connectivity)**
     - 解析文件间的 `[Link](./spec-*.md)` 引用。
     - 验证父子关系的双向链接完整性。
@@ -75,21 +78,19 @@ You **MUST** provide a quantitative score and actionable improvements.
 
 ## 📊 Summary
 - **Files Audited**: 3
-- **Average Score**: 82 (B)
+- **Average Score**: 78 (B)
 
 ## 📄 Details
 
 ### `specs/spec-runtime.md`
-**Score: 78 (B)**
+**Score: 75 (B)**
 - ✅ Structure: Perfect.
-- ❌ **Consistency (-10)**: 
-    - Interface `sendEmail` defined in Section 4, but Scope (Section 1) is limited to "Local Process Management".
+- ❌ **Holonomy (-15)**: 
+    - **Hollow Node**: Section 2 (Core Model) is empty. Section 3 (Invariants) only contains "See sub-specs". This parent node has been hollowed out.
 - ❌ **Connectivity (-10)**:
     - Parent `spec-system.md` does not list this file in its Composition section.
-- ⚠️ **Clarity (-2)**: Line 45 contains "TODO".
 
 **💡 Improvements**:
-1. Remove `sendEmail` or expand Scope in Section 1.
-2. Update `spec-system.md` to include `[Runtime](./spec-runtime.md)`.
-3. Resolve the TODO on line 45.
+1. Restore the high-level Core Model to `spec-runtime.md`.
+2. Define at least 3 global invariants that apply to all runtime components.
 ```
